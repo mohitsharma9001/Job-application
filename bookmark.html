@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+           *{
+            margin: 0;
+            padding:0;
+
+        }
+        #container{
+            display: flex;
+            font-size: x-large;
+         justify-content: space-evenly;
+         padding: 1%;
+         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        }
+  #container>div>a{
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
+  }
+         table{
+    
+    margin: 25px auto;
+    border-collapse: collapse;
+}
+th,td{
+    font-size: 18px;
+    border: 2px solid black;
+    padding: 8px;
+    text-align: left;
+}
+th{
+    background-color: teal;
+    color: white;
+    
+}
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div><a href="index.html">Home</a></div>
+        <div><a href="appliedjobs.html">Applied Jobs</a></div>
+        <div><a href="bookmark.html">Bookmark</a></div>
+    </div>
+    <table>
+        <thead >
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Job Applied</th>
+                <th>Salery Expected</th>
+                <th>Add to Bookmark</th>
+            </tr>
+        </thead>
+
+        <tbody id="tablebody">
+
+        </tbody>
+    </table>
+</body>
+<script>
+    //  var applyjob = JSON.parse(localStorage.getItem('job')) || [];
+
+var bookmarkList = JSON.parse(localStorage.getItem('bookmarkList')) 
+
+function displaydata(applyjob,job){
+    
+
+  applyjob.forEach(job => {
+      var row= document.createElement('tr');
+
+      var td1= document.createElement('td');
+      td1.innerText = job.name
+      var td2= document.createElement('td');
+      td2.innerText = job.email
+      var td3= document.createElement('td');
+     td3.innerText = job.select
+      var td4= document.createElement('td');
+    td4.innerText = job.salery
+      var td5= document.createElement('td');
+      td5.innerText = 'Bookmarked'
+      td5.innerText="Delete";
+          td5.style.color = "blue"
+          td5.style.cursor = "pointer"
+          td5.addEventListener("click",function(){
+            bookmarkList.splice(job,1)
+            localStorage.setItem("bookmarkList",JSON.stringify(bookmarkList))
+            window.location.reload();
+        })
+
+      row.append(td1,td2,td3,td4,td5);
+      document.querySelector('tbody').append(row)
+      
+  });
+ 
+}
+window.addEventListener("load",function(){
+    displaydata(bookmarkList)
+})
+
+</script>
+</html>

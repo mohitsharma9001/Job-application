@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding:0;
+
+        }
+        #container{
+            display: flex;
+            font-size: x-large;
+         justify-content: space-evenly;
+         padding: 1%;
+         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        }
+  #container>div>a{
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
+  }
+  form{
+      width: 25%;
+      height: 300px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  margin: 3% auto;
+  padding: 2%;
+  }
+  input,select{
+      display:block ;
+      margin: 15px 0;
+      font-size: 18px;
+      padding: 2%;
+  }
+#submit{
+    width: 70%;
+    margin :auto;
+    background-color: black;
+    color: wheat;
+    border-radius: 17px;
+    
+}
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div><a href="index.html">Home</a></div>
+        <div><a href="appliedjobs.html">Applied Jobs</a></div>
+        <div><a href="bookmark.html">Bookmark</a></div>
+    </div>
+    <form action="">
+        <h2>Enter your applied job details</h2>
+        <input type="text" placeholder="Enter your name" id="name">
+        <input type="email" placeholder="Enter your email" id="email">
+        <select name="" id="select">
+            <option value="fsd">FSD</option>
+            <option value="backend">Backend</option>
+            <option value="frontend">Frontend</option>
+        </select>
+        <input type="number" placeholder="Expected selery" id="salery">
+        <input type="submit" id="submit" value="Register">
+    </form>
+</body>
+<script>
+    document.querySelector('form').addEventListener('submit', myFunction);
+var job = JSON.parse(localStorage.getItem('job')) || [];
+
+function myFunction(){
+    event.preventDefault()
+    var jobO = {
+        name : document.querySelector('#name').value,
+        email : document.querySelector('#email').value,
+         select :  document.querySelector('#select').value,
+        salery :   document.querySelector('#salery').value,
+    }
+     
+  job.push(jobO);
+  localStorage.setItem('job',JSON.stringify(job))
+  alert('Job applied')
+  window.location.href="appliedjobs.html"
+    // if(name.innerText == '' || email.value == '' || salery.value == ''){
+    //     alert('Job applied')
+    //     window.location.href="appliedjobs.html"
+    // }else{
+    //     alert('Please fill given detils')
+    // }
+        
+    
+}
+    
+</script>
+</html>

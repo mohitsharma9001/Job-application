@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+       *{
+            margin: 0;
+            padding:0;
+
+        }
+        #container{
+            display: flex;
+            font-size: x-large;
+         justify-content: space-evenly;
+         padding: 1%;
+         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        }
+  #container>div>a{
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
+  }
+    table{
+    
+    margin: 25px auto;
+    border-collapse: collapse;
+}
+th,td{
+    font-size: 18px;
+    border: 2px solid black;
+    padding: 8px;
+    text-align: left;
+}
+th{
+    background-color: teal;
+    color: white;
+    
+}
+#sortname{
+    display: flex;
+    justify-content: space-around;
+    /* margin: auto; */
+}
+#sortbyname , #select1{
+padding: 13px;
+margin-top: 20px;
+background-color: teal;
+color: bisque;
+}
+/* #select1{
+
+} */
+</style>
+<body>
+    <div id="container">
+        <div><a href="index.html">Home</a></div>
+        <div><a href="appliedjobs.html">Applied Jobs</a></div>
+        <div><a href="bookmark.html">Bookmark</a></div>
+    </div>
+    <div id="sortname">
+        <select  name="sort" id="sortbyname" onchange="Namesort()">
+            <option value="">Sort By Salary</option>
+            <option value="asc">Ascending</option>
+            <option value="dsc">Descending</option>
+        </select>
+
+        <select name="" id="select1" onchange="Rolesort()">
+            <option value="fsd">Filter by role</option>
+            <option value="fsd">FSD</option>
+            <option value="frontend">Frontend</option>
+            <option value="backend">Backend</option>
+        </select>
+    </div>
+ 
+
+    <table>
+        <thead >
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Job Applied</th>
+                <th>Salery Expected</th>
+                <th>Add to Bookmark</th>
+            </tr>
+        </thead>
+
+        <tbody id="tablebody">
+
+        </tbody>
+    </table>
+</body>
+<script>
+    var applyjob = JSON.parse(localStorage.getItem('job')) || [];
+
+    var bookmarkList = JSON.parse(localStorage.getItem('bookmarkList')) || []
+
+    function displaydata(applyjob){
+        document.querySelector('#tablebody').innerHTML = '';
+
+      applyjob.forEach(job => {
+          var row= document.createElement('tr');
+
+          var td1= document.createElement('td');
+          td1.innerText = job.name
+          var td2= document.createElement('td');
+          td2.innerText = job.email
+          var td3= document.createElement('td');
+         td3.innerText = job.select
+          var td4= document.createElement('td');
+        td4.innerText = job.salery
+          var td5= document.createElement('td');
+          td5.innerText = 'Bookmark'
+          td5.style.color = "blue"
+          td5.style.cursor = "pointer"
+          td5.addEventListener('click' ,function(){
+           bookmarkList.push(job);
+          localStorage.setItem('bookmarkList',JSON.stringify(bookmarkList))
+          alert('Job bookmarked successfully')
+        //   window.location.href="bookmark.html"
+          })
+
+          row.append(td1,td2,td3,td4,td5);
+          document.querySelector('tbody').append(row)
+          
+      });
+     
+    }
+    window.addEventListener('load',function(){
+          displaydata(applyjob)
+      })
+
+    //   document.querySelector("#sortbyname").addEventListener("change",Namesort)
+
+function Namesort(){
+    document.querySelector("tbody").innerHTML="";
+  
+    var selected=document.querySelector("#sortbyname").value;
+    // console.log(selected)
+    // console.sort()
+    if(selected=="asc"){
+        applyjob.sort((a,b)=>(a.salery-b.salery));
+        
+    }
+    if(selected=="dsc"){
+        applyjob.sort((a,b)=>(b.salery-a.salery));
+        
+    }
+
+    displaydata(applyjob)
+}
+function Rolesort(){
+   var selectfilter = document.querySelector('#select1').value
+   var filterList= applyjob.filter(function(job){
+        return job.select === selectfilter
+    })
+    // console.log(selectfilter)
+    displaydata(filterList)
+}
+      
+       
+         
+      
+</script>
+</html>
